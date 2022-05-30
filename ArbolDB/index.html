@@ -1,16 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="arbolDB.js"></script>
-    <title>Document</title>
+	<title>Document</title>
 </head>
 
 <body>
-    <button>ok</button>
+    <table>
+		<tr>
+			<td></td>
+			<td><p>árbol binario</p></td>
+			<td></td>
+		</tr>
+        <tr>
+            <input id="presupuesto" rows="2" cols="62"required placeholder="presupuesto"></input>
+        </tr>
+        <tr> 
+            <td><input id="Alternativa_1a" rows="2" cols="20" required placeholder="alternativa "></input></td>
+			<td><input id="Costo_Fijo_1a"rows="2"cols="20" required placeholder="costo fijo "></input></td>
+			<td><input id="Costo_Variable_1a" rows="2" cols="20" required placeholder="costo variable "></input></td>
+        </tr>
+        <tr>
+            <td><input id="Alternativa_1b" rows="2" cols="20" required placeholder="alternativa "></input</td>
+			<td><input id="Costo_Fijo_1b"rows="2"cols="20" required placeholder="costo fijo "></input></td>
+			<td><input id="Costo_Variable_1b" rows="2" cols="20" required placeholder="costo variable "></input></td>
+        </tr> 
+        <tr>
+            <td><input id="Alternativa_2a" rows="2" cols="20" required placeholder="alternativa "></input></td>
+			<td><input id="Costo_Fijo_2a"rows="2"cols="20" required placeholder="costo fijo "></input></td>
+			<td><input id="Costo_Variable_2a" rows="2" cols="20" required placeholder="costo variable "></input></td>
+        </tr> 
+        <tr>
+            <td><input id="Alternativa_2b" rows="2" cols="20" required placeholder="alternativa "></input></td>
+			<td><input id="Costo_Fijo_2b"rows="2"cols="20" required placeholder="costo fijo "></input></td>
+			<td><input id="Costo_Variable_2b" rows="2" cols="20" required placeholder="costo variable "></input></td>
+        </tr> 
+        <tr> 
+            <td><input id="Alternativa_3a" rows="2" cols="20" required placeholder="alternativa "></input></td>
+			<td><input id="Costo_Fijo_3a"rows="2"cols="20" required placeholder="costo fijo "></input></td>
+			<td><input id="Costo_Variable_3a" rows="2" cols="20" required placeholder="costo variable "></input></td>
+        </tr> 
+        <tr>
+            <td><input id="Alternativa_3b" rows="2" cols="20" required placeholder="alternativa "></input></td>
+			<td><input id="Costo_Fijo_3b"rows="2"cols="20" required placeholder="costo fijo "></input></td>
+			<td><input id="Costo_Variable_3b" rows="2" cols="20" required placeholder="costo variable "></input></td>
+        </tr>
+	
+    </table>
+    <textarea id="ayuda" rows="2" cols="20" required placeholder="alternativa "></textarea>
+	<button onclick="click()">dale</button>
 </body>
-
 </html>
