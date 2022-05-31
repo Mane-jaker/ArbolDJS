@@ -1,58 +1,54 @@
-
-
-
-const propuestas = [{}] 
+const propuestas = [{}]
 var costosPT = [{}];
 class nodo {
-    constructor(){
+    constructor() {
         this.izquierdo = null;
         this.derecho = null;
         this.indice;
         this.nivel;
         this.dato;
     }
-    setDato(dato){
+    setDato(dato) {
         this.dato = dato;
     }
 }
 
-class arbol{
-    setRaiz(Presupuesto){
+class arbol {
+    setRaiz(Presupuesto) {
         //definiri raiz
-        this.raiz = new nodo();//crear nodo raiz
-        this.raiz.setDato(parseFloat(Presupuesto));//declarar el dato de la raiz
-        this.raiz.indice = parseFloat(Presupuesto);//declarar el indice de la raiz
+        this.raiz = new nodo(); //crear nodo raiz
+        this.raiz.setDato(parseFloat(Presupuesto)); //declarar el dato de la raiz
+        this.raiz.indice = parseFloat(Presupuesto); //declarar el indice de la raiz
         this.raiz.nivel = 1;
 
         //declarar nodo hijo izquierdo de la raiz
-        this.raiz.izquierdo = new nodo();//declarar nodo izquierdo duplicado
-        this.raiz.izquierdo.indice = Presupuesto - 10;//declarar indice
-        this.raiz.izquierdo.dato = Presupuesto;//declarar dato duplicado
+        this.raiz.izquierdo = new nodo(); //declarar nodo izquierdo duplicado
+        this.raiz.izquierdo.indice = Presupuesto - 10; //declarar indice
+        this.raiz.izquierdo.dato = Presupuesto; //declarar dato duplicado
         this.raiz.nivel = 2;
 
         //declarar nodo hijo derecho de la riaz
-        this.raiz.derecho = new nodo();//declarar nodo derecho duplicado
-        this.raiz.derecho.indice = parseFloat(Presupuesto) + parseFloat(10);//declarar inidice
-        this.raiz.derecho.dato = Presupuesto;//declarar dato duplicado
+        this.raiz.derecho = new nodo(); //declarar nodo derecho duplicado
+        this.raiz.derecho.indice = parseFloat(Presupuesto) + parseFloat(10); //declarar inidice
+        this.raiz.derecho.dato = Presupuesto; //declarar dato duplicado
         this.raiz.derecho.nivel = 2;
     }
 
     //guardar el costo de la propuesta en el arbol para su futura evalucacion
-    setDesicion(alternativa, costofijo, costovariable){
+    setDesicion(alternativa, costofijo, costovariable) {
         let ct = alternativa * costovariable * 200000;
         let cf = parseFloat(ct) + parseFloat(costofijo);
-        propuestas.push({costoPropuesta: cf});
+        propuestas.push({ costoPropuesta: cf });
     }
 
     //evaluar las propuestas guardadas y acomodarlas
-    Evaluar(){
+    Evaluar() {
         //variable para costos totales de cada propuesta
-        
         let Ie = 1;
         //calcular costos totales antes de su acomodacion
         for (let index = 1; index < propuestas.length; index++) {
-            if(index == 2 || index == 4) continue;
-            if(index == 6) break;
+            if (index == 2 || index == 4) continue;
+            if (index == 6) break;
             //sacar costos de propuesta en variable a y b
             const element = propuestas[index];
             let elementtemp = propuestas[index + 1]
@@ -62,26 +58,25 @@ class arbol{
             costosPT[Ie].setDato(parseFloat(element.costoPropuesta) + parseFloat(elementtemp.costoPropuesta));
             Ie++;
         }
-        
-        let e = 1;// identificador para costosPT
+
+        let e = 1; // identificador para costosPT
         for (let index = 1; index < propuestas.length; index++) {
-            if(index == 2 || index == 4) continue;
-            if(index == 6) break;
+            if (index == 2 || index == 4) continue;
+            if (index == 6) break;
             const primero = propuestas[index];
             let segundo = propuestas[index + 1]
-            //evaluar hojas del arbol
-            if(primero.costoPropuesta > segundo.costoPropuesta){
+                //evaluar hojas del arbol
+            if (primero.costoPropuesta > segundo.costoPropuesta) {
                 costosPT[e].izquierdo = new nodo()
                 costosPT[e].izquierdo.setDato(primero.costoPropuesta);
                 costosPT[e].nivel = 3;
                 costosPT[e].derecho = new nodo();
-                costosPT[e].derecho.setDato(segundo.costoPropuesta); 
-            }
-            else{
+                costosPT[e].derecho.setDato(segundo.costoPropuesta);
+            } else {
                 costosPT[e].izquierdo = new nodo();
                 costosPT[e].izquierdo.setDato(segundo.costoPropuesta);
                 costosPT[e].derecho = new nodo();
-                costosPT[e].derecho.setDato(primero.costoPropuesta); 
+                costosPT[e].derecho.setDato(primero.costoPropuesta);
             }
             e++;
         }
@@ -117,7 +112,7 @@ class arbol{
             }
         }*/
 
-        
+
         //acomodar datos
         this.raiz.izquierdo.izquierdo = costosPT[1];
         this.raiz.izquierdo.derecho = costosPT[2];
@@ -140,7 +135,7 @@ const inOrden = (raiz) => {
     }
 }*/
 
-const click = () =>{
+const click = () => {
     arbolito = new arbol();
     arbolito.setRaiz(document.getElementById("presupuesto").value);
     //primera desicion
