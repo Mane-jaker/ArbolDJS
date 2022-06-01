@@ -1,19 +1,27 @@
+//arreglos para evaluacion
 const propuestas = [{}]
 var costosPT = [{}];
+//creacion del nodo
 class nodo {
+    //constructor para inicializar el nodo
     constructor() {
-        this.izquierdo = null;
-        this.derecho = null;
-        this.indice;
-        this.nivel;
-        this.dato;
-    }
+            //inicializar variables 
+            this.izquierdo = null;
+            this.derecho = null;
+            this.indice;
+            this.nivel;
+            this.dato;
+        }
+        //set dato es un metodo que nos permite asignar un dato al nodo
+        //para este caso dato seria un valor "encapsulado" entre comillas pq JS hace sus cosas 
     setDato(dato) {
         this.dato = dato;
     }
 }
 
+//clase para el arbol sin constructor significa que se crea uno por defecto
 class arbol {
+    //asigna el presupuesto a la raiz
     setRaiz(Presupuesto) {
         //definiri raiz
         this.raiz = new nodo(); //crear nodo raiz
@@ -36,9 +44,10 @@ class arbol {
 
     //guardar el costo de la propuesta en el arbol para su futura evalucacion
     setDesicion(alternativa, costofijo, costovariable) {
-        let ct = alternativa * costovariable * 200000;
-        let cf = parseFloat(ct) + parseFloat(costofijo);
-        propuestas.push({ costoPropuesta: cf });
+        let ct = alternativa * costovariable * 200000; //guardar costo variante
+        let cf = parseFloat(ct) + parseFloat(costofijo); // guardar costo de la propuesta
+        propuestas.push({ costoPropuesta: cf }); // guardar en el arreglo de propuestas que se encuentra en la parte de arriba
+        //con push podemos añadir datos sin necesidad de un idex ya que añade los datos uno despues del siquiente
     }
 
     //evaluar las propuestas guardadas y acomodarlas
@@ -47,99 +56,85 @@ class arbol {
         let Ie = 1;
         //calcular costos totales antes de su acomodacion
         for (let index = 1; index < propuestas.length; index++) {
-            if (index == 2 || index == 4) continue;
-            if (index == 6) break;
+            if (index == 2 || index == 4) continue; // continue saltea una iteracion del bucle
+            if (index == 6) break; // break rompe el bucle
             //sacar costos de propuesta en variable a y b
             const element = propuestas[index];
             let elementtemp = propuestas[index + 1]
             let nuevo = new nodo();
             //calcular costo total
             costosPT.push(nuevo)
+                //sumar las 2 variantes de propuestas para calcular el total
             costosPT[Ie].setDato(parseFloat(element.costoPropuesta) + parseFloat(elementtemp.costoPropuesta));
             Ie++;
         }
 
-        let e = 1; // identificador para costosPT
+        let e = 1; // bucle para evaluar las hojas del arbol 
         for (let index = 1; index < propuestas.length; index++) {
-            if (index == 2 || index == 4) continue;
-            if (index == 6) break;
-            const primero = propuestas[index];
-            let segundo = propuestas[index + 1]
-                //evaluar hojas del arbol
+            //hacer que el bucle solo se ejecute 3 veces es decir las 3 propuestas de cada arbol
+            if (index == 2 || index == 4) continue; // continue saltea una iteracion del bucle
+            if (index == 6) break; // break rompe el bucle
+            const primero = propuestas[index]; //tomar el primer dato de la propuesta
+            let segundo = propuestas[index + 1] //tomar el segundo dato de propuesta
+
+            //evaluar hojas del arbol es decir acomodarlas en sus nodos
+            // determina a donde se ira cada hoja del arbol es decir la variante de la propuesta
             if (primero.costoPropuesta > segundo.costoPropuesta) {
-                costosPT[e].izquierdo = new nodo()
-                costosPT[e].izquierdo.setDato(primero.costoPropuesta);
-                costosPT[e].nivel = 3;
-                costosPT[e].derecho = new nodo();
-                costosPT[e].derecho.setDato(segundo.costoPropuesta);
-            } else {
+                costosPT[e].izquierdo = new nodo() // crea el nuevo nodo para asignarlo 
+                costosPT[e].izquierdo.setDato(primero.costoPropuesta); // asigna la variante de la propuesta al nodo izquierdo
+                costosPT[e].nivel = 3; // asigna el nivel 
+                costosPT[e].derecho = new nodo(); // crea el nuevo nodo 
+                costosPT[e].derecho.setDato(segundo.costoPropuesta); // asigna la vriante de la propuesta al nodo derecho
+            } else { // lo mismo que arriba solo que invertido
                 costosPT[e].izquierdo = new nodo();
                 costosPT[e].izquierdo.setDato(segundo.costoPropuesta);
                 costosPT[e].derecho = new nodo();
                 costosPT[e].derecho.setDato(primero.costoPropuesta);
             }
+            //e funciona como index para poder acceder a los nodos de las propuestas de costosPT[]
+            //e solo se ejecuta el numero de veces que se ejecuta el bucle como arriba delimitamos su ejecucion 
+            //entonces e solamente se ejecuta 3 veces
             e++;
         }
-        /* ordenacion */
-        //costosPT = sortItems(costosPT);
-        /*
-        for (let index = 1; index < costosPT.length; index++) {
-            //asignar indicies 
-            if (index == 1) {
-                costosPT[index].indice = this.raiz.dato - 15
-            }
-            if (index == 2) {
-                costosPT[index].indice = this.raiz.dato - 5
-            }
-            if (index == 3) {
-                costosPT[index].indice = parseFloat(this.raiz.dato) + parseFloat(5)
-            }
 
-            //Declarar nuevo nodo que sera añadido al arbol
-            let nuevo = costosPT[index];
-            //Declarar variables para recorrer el arbol binario
-            let anterior = null, recorre = this.raiz
-            //Evaluar destino del nuevo nodo
-            while (recorre != null) {
-                anterior = recorre
-                recorre = (nuevo.indice > recorre.indice) ? recorre.izquierdo : recorre.derecho
-            }
-            if (nuevo.indice > anterior.indice) {
-                anterior.derecho = nuevo;
-            }
-            else {
-                anterior.izquierdo = nuevo;
-            }
-        }*/
-
-
-        //acomodar datos
+        //calcular al mayor
+        //cada if verifica si un dato es menor a los demas en el caso de que lo encuentre lo toma y lo imprime como la mejor opcion
+        if (costosPT[1].dato < costosPT[2].dato && costosPT[3].dato < costosPT[3].dato) {
+            console.log("la propuesta mas optima es la de " + costosPT[1].dato + "Primera propuesta")
+        } else if (costosPT[2].dato < costosPT[1].dato && costosPT[2].dato < costosPT[3].dato) {
+            console.log("la propuesta mas optima es la de " + costosPT[2].dato + "Segunda propuesta")
+        } else if (costosPT[3].dato < costosPT[2].dato && costosPT[3].dato < costosPT[1].dato) {
+            console.log("la propuesta mas optima es la de " + costosPT[2].dato + "Tercera propuesta")
+        }
+        //asiignar los nodos ya creados es decir los sub arboles a la raiz
+        //la palabra reservada this significa este entonces estamos hablando de la raiz que se encuentra en la clase
         this.raiz.izquierdo.izquierdo = costosPT[1];
         this.raiz.izquierdo.derecho = costosPT[2];
         this.raiz.derecho.izquierdo = costosPT[3];
-        /*
-       var impresion = "";
-       inOrden(this.raiz);
-       document.getElementById("ayuda").value = impresion 
-       */
+
+
     }
 }
-/*
+
+//funcion recursiva (es decir que se ejecuta a si misma cierta cantidad de veces)
+//esta funcion sirve para imprimir el arbol binario
 const inOrden = (raiz) => {
-    if(raiz.izquierdo != null){
-        inOrden(raiz.nodohi)
+    if (raiz.izquierdo != null) {
+        inOrden(raiz.izquierdo)
     }
-    impresion += " | " + raiz.dato + " | ";
-    if(raiz.nodohd != null){
+    console.log(" | " + raiz.dato + " | ")
+    if (raiz.derecho != null) {
         inOrden(raiz.derecho)
     }
-}*/
+}
 
-const click = () => {
-    arbolito = new arbol();
-    arbolito.setRaiz(document.getElementById("presupuesto").value);
+//funcion para ejecutar el programa
+function click() {
+    arbolito = new arbol(); //creacion del arbol arbolito (uso de la palabra reservada new que significa nuevo)
+    arbolito.setRaiz(document.getElementById("presupuesto").value); //(set raiz es una funcon de arbolito)
     //primera desicion
-    arbolito.setDesicion(
+    arbolito.setDesicion( // setDesicion es una funcion de arbolito que añade las desiciones
+        //tomamos todos los datos de las tablas
         document.getElementById("Alternativa_1a").value,
         document.getElementById("Costo_Fijo_1a").value,
         document.getElementById("Costo_Variable_1a").value
@@ -174,6 +169,10 @@ const click = () => {
         document.getElementById("Costo_Fijo_3b").value,
         document.getElementById("Costo_Variable_3b").value
     );
+    //llamar a la funcion evaluar
     arbolito.Evaluar();
+    //llamar a la funcion recursiva in orden y asignarle la raiz
+    inOrden(arbolito);
+    //imprimir ya pq ps ya acabamos 
     console.log("ya")
 }
