@@ -99,7 +99,7 @@ class arbol {
 
         //calcular al mayor
         //cada if verifica si un dato es menor a los demas en el caso de que lo encuentre lo toma y lo imprime como la mejor opcion
-        if (costosPT[1].dato < costosPT[2].dato && costosPT[3].dato < costosPT[3].dato) {
+        if (costosPT[1].dato < costosPT[2].dato && costosPT[1].dato < costosPT[3].dato) {
             console.log("la propuesta mas optima es la de " + costosPT[1].dato + "Primera propuesta")
         } else if (costosPT[2].dato < costosPT[1].dato && costosPT[2].dato < costosPT[3].dato) {
             console.log("la propuesta mas optima es la de " + costosPT[2].dato + "Segunda propuesta")
@@ -172,7 +172,7 @@ function click() {
     //llamar a la funcion evaluar
     arbolito.Evaluar();
     //llamar a la funcion recursiva in orden y asignarle la raiz
-    inOrden(arbolito);
+    inOrden(arbolito.raiz);
     //imprimir ya pq ps ya acabamos 
     console.log("ya")
 }
